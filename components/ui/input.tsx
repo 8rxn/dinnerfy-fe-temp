@@ -7,7 +7,10 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const Input: FC<InputProps> =forwardRef( ({ label, ...props }) => {
   const {register} = useForm();
-  return <input {...props} {...register(label, { required: true })}  placeholder={label}></input>;
+  return <input {...props} 
+  {...register(label, { required: true })}  placeholder={label}></input>;
 })
+
+Input.displayName = "Input";
 
 export default Input;
