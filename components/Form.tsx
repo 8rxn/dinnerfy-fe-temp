@@ -2,40 +2,35 @@
 import axios from "axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-
 type Inputs = {
   RecipeID: number;
   Servings: number;
 };
 
 const Form = () => {
-
   const fetchData = async (data: Inputs) => {
+    let headersList = {
+      Accept: "*/*",
+      "User-Agent": "Thunder Client (https://www.thunderclient.com)",
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    };
 
-    const dataResponse = JSON.stringify({
-      "RecipeID": 60,
-      "Servings": 3
+    let bodyContent = JSON.stringify({
+      RecipeID: 60,
+      Servings: 3,
     });
-    
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    
-    xhr.addEventListener("readystatechange", function () {
-      if (this.readyState === this.DONE) {
-        console.log(this.responseText);
-      }
-    });
-    
-    xhr.open("POST", "https://dinnerfy-ds-production.up.railway.app/recipe");
-    xhr.setRequestHeader("Accept", "*/*");
-    xhr.setRequestHeader("User-Agent", "Thunder Client (https://www.thunderclient.com)");
-    xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
-    xhr.setRequestHeader("", "*");
-    xhr.setRequestHeader("Content-Type", "application/json");
-    
-    xhr.send(dataResponse);
-    
-  }
+
+    let reqOptions = {
+      url: "https://dinnerfy-ds-production.up.railway.app/recipe",
+      method: "POST",
+      headers: headersList,
+      data: bodyContent,
+    };
+
+    let response = await axios.request(reqOptions);
+    console.log(response.data);
+  };
 
   const {
     register,
