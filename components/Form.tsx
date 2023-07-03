@@ -12,7 +12,7 @@ type Inputs = {
 };
 
 
-const Form: FC<Forms> = ({ setLoading, setResponse }) => {
+const Form: FC<Forms> = ({ setLoading, setResponse,setServings }) => {
   const fetchData = async (data: Inputs) => {
     let reqOptions = {
       url: "/api/recipes",
@@ -34,14 +34,15 @@ const Form: FC<Forms> = ({ setLoading, setResponse }) => {
   const onSubmit: SubmitHandler<Inputs> = (data) => {
     setLoading(true);
     setResponse(null);
+    setServings(data.Servings)
     fetchData(data);
   };
 
   return (
-    <div className="flex justify-between flex-wrap-reverse sm:px-10">
+    <div className="flex justify-between flex-wrap-reverse sm:px-10" id="form">
       <div className="w-fit m-auto ">
-        <h2 className="text-primary-light font-bold sm:text-3xl max-w-2xl max-[300px]:text-sm text-xl">
-          Enter the RecipeID and Servings to get <br /> the Recipe
+        <h2 className="text-primary-light font-bold sm:text-3xl max-w-2xl max-[300px]:text-xs text-xl">
+          Enter the RecipeID and Servings to get the Recipe
         </h2>
         <form
           onSubmit={handleSubmit(onSubmit)}
@@ -64,10 +65,10 @@ const Form: FC<Forms> = ({ setLoading, setResponse }) => {
           )}
           <button
             type="submit"
-            className="mt-4 text-xl bg-primary-light text-white sm:p-10 sm:py-5 px-6 py-3 sm:rounded-2xl rounded-xl hover:scale-105 transition-all "
+            className="mt-4 text-xl bg-primary-light text-white sm:p-10 sm:py-5 px-6 py-3 sm:rounded-2xl rounded-xl hover:scale-105 transition-all max-[300px]:text-sm "
             disabled={!!errors.RecipeID || !!errors.Servings}
           >
-            Submit
+            Get Recipes
           </button>
         </form>
       </div>

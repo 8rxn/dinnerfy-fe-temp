@@ -1,12 +1,19 @@
-import { Response } from "@/types";
+import { Response, ingredients, responseData, serveInstructions, serveType } from "@/types";
 import React, { FC } from "react";
 
-const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
+const Results: FC<Response> = ({
+  response,
+  setResponse,
+  setLoading,
+  servings,
+}) => {
+  const serve = `Serve_${servings}` as keyof responseData;
   return (
     <div className="flex flex-col items-center w-full gap-2 px-2 text-primary">
       <div className="flex justify-between items-center w-full sm:gap-14 gap-6 max-[300px]:gap-2">
-        <h1 className="primary font-extrabold sm:text-5xl text-3xl break-words text-left  max-w-[60%] max-[300px]:text-2xl ">
-          {response?.Name } <span className="text-xl sm:text-3xl">{`#${response?.RecipeID}`}</span>
+        <h1 className="font-extrabold sm:text-5xl text-3xl break-words text-left  max-w-[60%] max-[300px]:text-2xl ">
+          {response?.Name}{" "}
+          <span className="text-xl sm:text-3xl">{`#${response?.RecipeID}`}</span>
         </h1>
         {/* Refresh Button for getting  new Recipe */}
         <button
@@ -52,13 +59,14 @@ const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
         {response?.Interest_Tags.tags.map((item) => (
           <p key={item}>{item}</p>
         ))}
+        <br />
         {response?.Diet_Tags.map((item) => (
           <p key={item}>{item}</p>
         ))}
       </div>
 
-      <div className=" mt-6 mb-4">
-        <h3 className=" text-start font-medium sm:text-2xl text-sm break-words max-w-[90%] max-[300px]:text-2xl ">
+      <div className=" mt-8 mb-6">
+        <h3 className=" text-start font-medium sm:text-3xl text-base break-words max-w-[90%] max-[300px]:text-2xl ">
           {response?.Recipe_Meta.description}
         </h3>
       </div>
@@ -67,7 +75,9 @@ const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
         <h3 className="">Nutritional Details: </h3>
         <div className="w-full flex gap-4 flex-wrap max-[300px]:gap-1 font-semibold gap-y-0">
           {response?.Recipe_Meta.nutritionFact.map((item) => (
-            <span key= {item} className=" break-keep max-w-[90%] ">{item}</span>
+            <span key={item} className=" break-keep max-w-[90%] ">
+              {item}
+            </span>
           ))}
         </div>
       </div>
@@ -75,7 +85,9 @@ const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
         <h3 className="">Popular In: </h3>
         <div className="w-full flex gap-4 flex-wrap max-[300px]:gap-1 font-semibold gap-y-0">
           {response?.Recipe_Meta.popularRegion.map((item) => (
-            <span key= {item} className=" break-keep max-w-[90%] ">{item}</span>
+            <span key={item} className=" break-keep max-w-[90%] ">
+              {item}
+            </span>
           ))}
         </div>
       </div>
@@ -101,7 +113,104 @@ const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
         </p>
       </div>
 
-      <div></div>
+      <div className="w-full flex gap-1 sm:gap-4 sm:text-lg text-sm flex-col sm:flex-row items-start text-start">
+        <p className="">
+          Difficulty :{" "}
+          <span className="font-semibold">
+            {response?.Cooking_Meta.difficulty}
+          </span>
+        </p>
+        <p className="">
+          Prepping Time :{" "}
+          <span className="font-semibold">
+            {response?.Cooking_Meta.prepTime}
+          </span>
+        </p>
+        <p className="">
+          Cooking Time :{" "}
+          <span className="font-semibold">
+            {response?.Cooking_Meta.cookTime}
+          </span>
+        </p>
+        <p className="">
+          No. Of Steps :{" "}
+          <span className="font-semibold">{response?.Cooking_Meta.steps}</span>
+        </p>
+      </div>
+
+      <div className="w-full text-start mt-6">
+        <h2 className="font-bold sm:text-4xl text-2xl text-left  max-w-[90%] max-[300px]:text-xl mb-4 ">
+          Ingredients for {servings} Servings :
+        </h2>
+        <div className="grid sm:grid-cols-2 m-auto w-fit sm:w-full sm:m-0">
+          {!!response && response.Cooking_Meta.ingredients.map((item:ingredients) => (
+            <p
+              className=" font-semibold text-xl col-span-1"
+              key={item.ingredientID}
+            >
+              {" "}
+              • {item.ingredientName + " - "}{" "}
+              {/*@ts-ignore */}
+              {item.quantity.find((obj) => servings in obj)[servings] + " "}{" "}
+
+              {/* @ts-ignore */}
+              {item.quantity.find((obj) => servings in obj)[servings].includes(item.unit)
+                ? ""
+                : " " + item.unit}{" "}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      <div className="w-full text-start mt-6">
+        <h2 className="font-bold sm:text-4xl text-2xl text-left  max-w-[90%] max-[300px]:text-xl mb-4 ">
+          Tools :
+        </h2>
+        <div className="grid sm:grid-cols-2 m-auto w-fit sm:w-full sm:m-0">
+          {response?.Cooking_Meta.tools.map((item) => (
+            <p className=" font-semibold text-xl col-span-1" key={item}>
+              • {item}
+            </p>
+          ))}
+        </div>
+      </div>
+
+      <div className="w-full text-start mt-6">
+        <h2 className="font-bold sm:text-4xl text-2xl text-left  max-w-[90%] max-[300px]:text-xl mb-4 ">
+          Recipe :
+        </h2>
+        <div className="flex flex-col m-auto w-fit sm:w-full sm:m-0 gap-4">
+          {response!==null && (response[serve] as serveType).instructions.map(
+            (item:serveInstructions) => {
+              return (
+                <div
+                  key={item["stepNumber"]}
+                  className="md:grid grid-cols-5 flex flex-col-reverse"
+                >
+                  <h3 className="col-span-1 font-normal text-lg sm:text-xl border-primary-light rounded-3xl border h-fit w-fit p-1 px-4 self-end">
+                    {item.stageTitle}
+                  </h3>
+                  <div className=" font-semibold text-xl sm:text-2xl col-span-4  ">
+                    <h3>
+                      {item["stepNumber"]} . {item.instruction}
+                    </h3>
+                    <div className="w-full flex gap-1 sm:gap-4 sm:text-lg text-sm flex-col sm:flex-row items-start text-start">
+                      <p className="">
+                        Time :{" "}
+                        <span className="font-semibold">{item["time"]}</span>
+                      </p>
+                      <p className="">
+                        Tool :{" "}
+                        <span className="font-semibold">{item["tool"]}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
+          )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -11,15 +11,16 @@ interface Props {}
 const Body: FC<Props> = () => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState<responseData>(null);
+  const [servings, setServings] = useState<number>(1)
   return (
     <Wrapper styles="text-md pt-20 ">
       {loading ? (
         <Loading/>
       ) : !!response?.Name ? (
-        <Results response={response} setResponse={setResponse} setLoading={setLoading} />
+        <Results response={response} setResponse={setResponse} setLoading={setLoading}  servings={servings} />
       ) : (
         <>
-          <Form setLoading={setLoading} setResponse={setResponse} />
+          <Form setLoading={setLoading} setResponse={setResponse} setServings={setServings} />
         </>
       )}
     </Wrapper>
