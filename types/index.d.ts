@@ -69,8 +69,8 @@ export type responseData =  {
     steps: number;
   };
   Serve_1?: {
-    recipeSource: "Allrecipes.com";
-    lastUpdated: "2021-09-01";
+    recipeSource: string;
+    lastUpdated: string;
     instructions: {
       stepNumber: number;
       stageTitle: string;
@@ -81,8 +81,8 @@ export type responseData =  {
     }[];
   };
   Serve_2?: {
-    recipeSource: "Allrecipes.com";
-    lastUpdated: "2021-09-01";
+    recipeSource: string;
+    lastUpdated: string;
     instructions: {
       stepNumber: number;
       stageTitle: string;
@@ -93,8 +93,8 @@ export type responseData =  {
     }[];
   };
   Serve_3?: {
-    recipeSource: "Allrecipes.com";
-    lastUpdated: "2021-09-01";
+    recipeSource: string;
+    lastUpdated: string;
     instructions: {
       stepNumber: number;
       stageTitle: string;
@@ -105,8 +105,8 @@ export type responseData =  {
     }[];
   };
   Serve_4?: {
-    recipeSource: "Allrecipes.com";
-    lastUpdated: "2021-09-01";
+    recipeSource: string;
+    lastUpdated: string;
     instructions: {
       stepNumber: number;
       stageTitle: string;
@@ -117,8 +117,8 @@ export type responseData =  {
     }[];
   };
   Serve_5?: {
-    recipeSource: "Allrecipes.com";
-    lastUpdated: "2021-09-01";
+    recipeSource: string;
+    lastUpdated: string;
     instructions: {
       stepNumber: number;
       stageTitle: string;
@@ -129,8 +129,8 @@ export type responseData =  {
     }[];
   };
   Serve_6?: {
-    recipeSource: "Allrecipes.com";
-    lastUpdated: "2021-09-01";
+    recipeSource: string;
+    lastUpdated: string;
     instructions: {
       stepNumber: number;
       stageTitle: string;

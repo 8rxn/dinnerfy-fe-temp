@@ -1,15 +1,22 @@
 import { Response } from "@/types";
 import React, { FC } from "react";
 
-const Results: FC<Response> = ({ response, setResponse,setLoading }) => {
+const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
   return (
-    <div className="flex flex-col items-center w-full">
-      <div className="flex justify-between items-center w-full px-2 sm:gap-14 gap-6 max-[300px]:gap-2">
-        <h1 className="text-primary font-extrabold sm:text-5xl text-3xl break-words text-left  max-w-[60%] max-[300px]:text-2xl ">
-          {response?.Name}
+    <div className="flex flex-col items-center w-full gap-2 px-2 text-primary">
+      <div className="flex justify-between items-center w-full sm:gap-14 gap-6 max-[300px]:gap-2">
+        <h1 className="primary font-extrabold sm:text-5xl text-3xl break-words text-left  max-w-[60%] max-[300px]:text-2xl ">
+          {response?.Name } <span className="text-xl sm:text-3xl">{`#${response?.RecipeID}`}</span>
         </h1>
         {/* Refresh Button for getting  new Recipe */}
-        <button className="text-xl max-[300px]:text-sm bg-primary-light text-white fill-white sm:px-6 p-3 rounded-xl hover:scale-105 transition-transform " onClick={()=>{setLoading(true);setResponse(null);setLoading(false)}}>
+        <button
+          className="text-xl max-[300px]:text-sm bg-primary-light text-white fill-white sm:px-6 p-3 rounded-xl hover:scale-105 transition-transform "
+          onClick={() => {
+            setLoading(true);
+            setResponse(null);
+            setLoading(false);
+          }}
+        >
           <span className="md:block hidden">Get Another Recipe</span>
           <span className="md:hidden block">
             <svg
@@ -22,22 +29,79 @@ const Results: FC<Response> = ({ response, setResponse,setLoading }) => {
             </svg>
           </span>
         </button>
-
       </div>
-       <div className="px-2 mt-8">
-       <h2 className="text-primary text-start font-medium sm:text-2xl text-sm break-words max-w-[90%] max-[300px]:text-2xl ">
-        {response?.Recipe_Meta.description}
-        </h2>
-       </div>
-       <div className="grid grid-cols-2">
-        <div className="col-span-1">
-        Also Known As
+
+      <div className="w-full flex gap-4 sm:text-lg text-sm max-[300px]:flex-col max-[300px]:gap-1 max-[300px]:mt-2 items-start ">
+        <h3 className="font-semibold break-keep">AKA:</h3>
+        {response?.Recipe_Meta.Aliases.map((item) => (
+          <p key={item}>{item}</p>
+        ))}
+        <p className="ml-4">
+          <span className="font-semibold">
+            {response?.Recipe_Meta.rating.noOfReviews}{" "}
+          </span>{" "}
+          Reviews{" - "}
+          <span className="font-semibold">
+            {response?.Recipe_Meta?.rating?.starRating}
+          </span>{" "}
+          &#11088;{" "}
+        </p>
+      </div>
+
+      <div className="w-full flex gap-4 sm:text-lg text-sm flex-wrap max-[300px]:gap-1 max-[300px]:mt-2 items-start underline underline-offset-8 ">
+        {response?.Interest_Tags.tags.map((item) => (
+          <p key={item}>{item}</p>
+        ))}
+        {response?.Diet_Tags.map((item) => (
+          <p key={item}>{item}</p>
+        ))}
+      </div>
+
+      <div className=" mt-6 mb-4">
+        <h3 className=" text-start font-medium sm:text-2xl text-sm break-words max-w-[90%] max-[300px]:text-2xl ">
+          {response?.Recipe_Meta.description}
+        </h3>
+      </div>
+
+      <div className="flex text-start items-start w-full justify-start  sm:text-lg text-sm ">
+        <h3 className="">Nutritional Details: </h3>
+        <div className="w-full flex gap-4 flex-wrap max-[300px]:gap-1 font-semibold gap-y-0">
+          {response?.Recipe_Meta.nutritionFact.map((item) => (
+            <span className=" break-keep max-w-[90%] ">{item}</span>
+          ))}
         </div>
-        <div className="col-span-1 flex gap-2">
-        {response?.Recipe_Meta.Aliases.map((item)=>(<p key={item}>{item}</p>))}
+      </div>
+      <div className="flex text-start items-start w-full justify-start  sm:text-lg text-sm ">
+        <h3 className="">Popular In: </h3>
+        <div className="w-full flex gap-4 flex-wrap max-[300px]:gap-1 font-semibold gap-y-0">
+          {response?.Recipe_Meta.popularRegion.map((item) => (
+            <span className=" break-keep max-w-[90%] ">{item}</span>
+          ))}
         </div>
-        
-       </div>
+      </div>
+
+      <div className="w-full flex gap-1 sm:gap-4 sm:text-lg text-sm flex-col sm:flex-row items-start text-start">
+        <p className="">
+          Calories :{" "}
+          <span className="font-semibold">
+            {response?.Recipe_Meta.calories}
+          </span>
+        </p>
+        <p className="">
+          Carbon Footprint :{" "}
+          <span className="font-semibold">
+            {response?.Recipe_Meta.carbonFootprint}
+          </span>
+        </p>
+        <p className="">
+          Source :{" "}
+          <span className="font-semibold">
+            {response?.Recipe_Meta.informationSource}
+          </span>
+        </p>
+      </div>
+
+      <div></div>
     </div>
   );
 };
