@@ -67,7 +67,7 @@ const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
         <h3 className="">Nutritional Details: </h3>
         <div className="w-full flex gap-4 flex-wrap max-[300px]:gap-1 font-semibold gap-y-0">
           {response?.Recipe_Meta.nutritionFact.map((item) => (
-            <span className=" break-keep max-w-[90%] ">{item}</span>
+            <span key= {item} className=" break-keep max-w-[90%] ">{item}</span>
           ))}
         </div>
       </div>
@@ -75,7 +75,7 @@ const Results: FC<Response> = ({ response, setResponse, setLoading }) => {
         <h3 className="">Popular In: </h3>
         <div className="w-full flex gap-4 flex-wrap max-[300px]:gap-1 font-semibold gap-y-0">
           {response?.Recipe_Meta.popularRegion.map((item) => (
-            <span className=" break-keep max-w-[90%] ">{item}</span>
+            <span key= {item} className=" break-keep max-w-[90%] ">{item}</span>
           ))}
         </div>
       </div>
