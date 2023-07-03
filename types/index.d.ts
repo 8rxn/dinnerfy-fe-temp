@@ -1,4 +1,5 @@
 export interface Response {
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
   response : responseData
   setResponse: React.Dispatch<React.SetStateAction<responseData>>;
 }

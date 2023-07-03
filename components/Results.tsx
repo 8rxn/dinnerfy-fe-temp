@@ -1,7 +1,7 @@
 import { Response } from "@/types";
 import React, { FC } from "react";
 
-const Results: FC<Response> = ({ response, setResponse }) => {
+const Results: FC<Response> = ({ response, setResponse,setLoading }) => {
   return (
     <div className="flex flex-col items-center w-full">
       <div className="flex justify-between items-center w-full px-2 sm:gap-14 gap-6 max-[300px]:gap-2">
@@ -9,7 +9,7 @@ const Results: FC<Response> = ({ response, setResponse }) => {
           {response?.Name}
         </h1>
         {/* Refresh Button for getting  new Recipe */}
-        <button className="text-xl max-[300px]:text-sm bg-primary-light text-white fill-white sm:px-6 p-3 rounded-xl hover:scale-105 transition-transform " onClick={()=>{setResponse(null)}}>
+        <button className="text-xl max-[300px]:text-sm bg-primary-light text-white fill-white sm:px-6 p-3 rounded-xl hover:scale-105 transition-transform " onClick={()=>{setLoading(true);setResponse(null);setLoading(false)}}>
           <span className="md:block hidden">Get Another Recipe</span>
           <span className="md:hidden block">
             <svg
