@@ -34,7 +34,7 @@ const Results: FC<Response> = ({ response, setResponse }) => {
         Also Known As
         </div>
         <div className="col-span-1 flex gap-2">
-        {response?.Recipe_Meta.Aliases.map((item)=>(<p>{item}</p>))}
+        {response?.Recipe_Meta.Aliases.map((item)=>(<p key={item}>{item}</p>))}
         </div>
         
        </div>
