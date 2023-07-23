@@ -3,8 +3,6 @@ import React, { FC } from "react";
 
 const Results: FC<Response> = ({
   response,
-  setResponse,
-  setLoading,
   servings,
 }) => {
   const serve = `Serve_${servings}` as keyof responseData;
@@ -19,9 +17,6 @@ const Results: FC<Response> = ({
         <button
           className="text-xl max-[300px]:text-sm bg-primary-light text-white fill-white sm:px-6 p-3 rounded-xl hover:scale-105 transition-transform "
           onClick={() => {
-            setLoading(true);
-            setResponse(null);
-            setLoading(false);
           }}
         >
           <span className="md:block hidden">Get Another Recipe</span>
